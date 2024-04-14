@@ -12,12 +12,22 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 class poliphase:
 
-    def generate_curtain(shape, split_column):
+    def generate_curtain(shape, split_column, graph=False):
         matrix = np.zeros(shape)  # Create a matrix of zeros
         matrix[:, :split_column] = 1     # Set columns before split_column to 1
-        curtainGraph = sns.heatmap(matrix, linewidth=0, square=True, xticklabels = 25, yticklabels= 25, cmap='rocket')
-        plt.title('Curtain Phase Mask')
-        plt.show()
+        
+        maxmat =matrix.max()
+        if maxmat > 0: 
+            alpha = (np.pi)/maxmat
+        else: 
+            alpha = np.pi
+        matrixinPi = matrix*alpha
+        
+        
+        if graph==True:
+            curtainGraph = sns.heatmap(matrixinPi, linewidth=0, square=True, xticklabels = 25, yticklabels= 25, cmap='mako', vmin=-1*np.pi)
+            plt.title('Curtain Phase Mask')
+            plt.show()
         return matrix
 
     def generate_phase_mask(order, shape, pupilShape, shift=(0,0), fact=1):
@@ -123,7 +133,10 @@ class matriarch:
 
         #"Normalizes" the phase mask in respect to pi, such that the phase mask goes from -pi to pi
         maxmat = phase_shift.max()
-        alpha = (np.pi)/maxmat
+        if maxmat > 0: 
+            alpha = (np.pi)/maxmat
+        else: 
+            alpha = 1
         phase_shift = phase_shift*alpha
         
         

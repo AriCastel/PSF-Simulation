@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 noiseFactor = 0.1
 sigma = 3
 otf_shape = (256, 256)  # Define shape of the OTF
-aberrated_otf = phasesim.poliphase.generate_aberrated_otf(otf_shape, sigma, noiseFactor, type='ideal')
+aberrated_otf = phasesim.poliphase.generate_aberrated_otf(otf_shape, sigma, noiseFactor, type='idea')
 logging.info("Original OTF created")
 
 #Generates a Phase Mask 
@@ -25,7 +25,7 @@ mask_shift = (40,0)
 maskOrder = 3
 maskFact = 1
 #phaseMask = phasesim.poliphase.generate_phase_mask(maskOrder, mask_size, otf_shape, mask_shift)
-phaseMask = phasesim.poliphase.generate_curtain(mask_size,150)
+phaseMask = phasesim.poliphase.generate_curtain(mask_size,128+64, graph=True)
 logging.info("Phase Mask Created")
 
 #Generates a Curtain Binary phaseMask
@@ -56,7 +56,7 @@ plt.title('Aberrated OTF')
 plt.colorbar()
 # Plot PSF
 plt.subplot(1, 2, 2)
-plt.imshow(zoomiePSF ,cmap='rocket', vmin=0)
+plt.imshow(zoomiePSF/0.0038 ,cmap='rocket', vmin=0, vmax=1)
 plt.title('Point Spread Function (PSF)')
 plt.colorbar()
 
