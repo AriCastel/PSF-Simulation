@@ -72,7 +72,7 @@ ani.save('PSF.GIF', writer='ffmpeg')
 #Plot the Mean and Maximum values of the PSF    
 logging.info("Plotting Results")
 plt.figure(figsize=(10, 5))
-# Plot OTF
+# Plot maximums
 plt.subplot(1, 2, 1)
 plt.plot(interval/mask_size[0], maximums/max(maximums), color='#240046', linewidth=2, linestyle='-')
 plt.scatter(interval/mask_size[0], maximums/max(maximums), marker='d', color='#B40424')
@@ -81,7 +81,7 @@ plt.grid(True, color='#E1E2EF')  # Add grid lines
 plt.xlabel('Fourier plane occlusion', fontsize=18)
 plt.ylabel('Maximum PSF intensity', fontsize=18)
 
-# Plot PSF
+# Plot averages
 plt.subplot(1, 2, 2)
 plt.plot(interval/mask_size[0], means/min(means), color='#240046', linewidth=2, linestyle='-')
 plt.scatter(interval/mask_size[0], means/min(means),  marker='d', color='#B40424')
